@@ -30,11 +30,11 @@ install:
 
 script:
   - echo -e "[run]\nomit=\n    *ae.py*\n    sknn/backend/deepy/*\n    sknn/backend/__init__.py*\n" > .coveragerc
-  - nosetests --with-coverage --cover-package=sknn -v sknn.tests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_scikit-neuralnetwork_eb2e611807_2
-  - python -m properform Push 47.88.50.110:15554 asdf_scikit-neuralnetwork_eb2e611807_2 ./profile_scikit-neuralnetwork_eb2e611807_2
+  - nosetests --with-coverage --cover-package=sknn -v sknn.tests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_scikit-neuralnetwork_eb2e611807_3
+  - python -m properform Push 47.88.50.110:15554 asdf_scikit-neuralnetwork_eb2e611807_3 ./profile_scikit-neuralnetwork_eb2e611807_3
 
 
 
 after_success:
   - coveralls
- #2017-09-16 13:13:12 modified at 0 #2017-09-16 13:13:18 modified at 1 #2017-09-16 13:13:25 modified at 2
+ #2017-09-16 13:13:12 modified at 0 #2017-09-16 13:13:18 modified at 1 #2017-09-16 13:13:25 modified at 2 #2017-09-16 13:13:31 modified at 3
