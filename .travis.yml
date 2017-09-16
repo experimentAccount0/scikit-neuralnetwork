@@ -2,7 +2,7 @@ language: python
 
 python:
   - "2.7"
-  - "3.4"
+
 
 before_install:
   - wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
@@ -11,15 +11,30 @@ before_install:
   - export PATH=~/anaconda/bin:$PATH
   - conda update --yes --quiet conda
 
+  # add for profile
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
+
+
 install:
+# add for profile
+  - sudo apt-get install -qq g++-4.8
+  - export CXX="g++-4.8"
+  - pip install nose-cprof
+  - pip install properform
+
   - conda create --yes -q -n pyenv python=$TRAVIS_PYTHON_VERSION pip numpy scipy pandas cython matplotlib scikit-learn nose pyyaml
   - source activate pyenv
   - pip install -r https://raw.githubusercontent.com/aigamedev/scikit-neuralnetwork/master/requirements.txt
-  - pip install -q argparse coveralls 
+  - pip install -q argparse coveralls
 
 script:
   - echo -e "[run]\nomit=\n    *ae.py*\n    sknn/backend/deepy/*\n    sknn/backend/__init__.py*\n" > .coveragerc
-  - nosetests --with-coverage --cover-package=sknn -v sknn.tests
+  - nosetests --with-coverage --cover-package=sknn -v sknn.tests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_scikit-neuralnetwork_d3f0b37e19_0
+  - python -m properform Push 47.88.50.110:15554 asdf_scikit-neuralnetwork_d3f0b37e19_0 ./profile_scikit-neuralnetwork_d3f0b37e19_0
+
+
 
 after_success:
   - coveralls
+ #2017-09-16 13:13:46 modified at 0
